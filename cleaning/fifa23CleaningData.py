@@ -67,8 +67,14 @@ playerStats['Position'] = playerStats['Position'].replace(old_positions, new_pos
 #Removing €, M and K from Value so that it can be converted to float:
 for i in range(len(playerStats['Value'])):
     playerStats.iloc[i, 6] = playerStats.iloc[i, 6].replace('€', '')
-    playerStats.iloc[i, 6] = playerStats.iloc[i, 6].replace('M', '')
-    playerStats.iloc[i, 6] = playerStats.iloc[i, 6].replace('K', '')
+    if playerStats.iloc[i,6].find('K') != -1:
+        playerStats.iloc[i, 6] = playerStats.iloc[i, 6].replace('K', '')
+        playerStats.iloc[i,6] = float(playerStats.iloc[i,6])
+        playerStats.iloc[i,6] = playerStats.iloc[i,6] /1000
+    elif playerStats.iloc[i,6].find('M') != -1:
+        playerStats.iloc[i, 6] = playerStats.iloc[i, 6].replace('M', '')
+        playerStats.iloc[i,6] = float(playerStats.iloc[i,6])
+
 
 #Removing 'CM' from Height:
 for i in range(len(playerStats['HeightCM'])):
